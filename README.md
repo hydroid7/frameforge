@@ -74,6 +74,10 @@ For a start, we are going to create a simple frame.
 
 **Voila!** You have your first frame! For more information, follow the [tutorial](docs/tutorial.md)
 
+## Python API
+
+To script FrameForge (create and edit profiles, trims, miters, cutouts, BOM...) from the FreeCAD console or macros, see the [Python API documentation](docs/python-api.md).
+
 ## Maintainer
 
 Vivien HENRY
