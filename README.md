@@ -74,11 +74,31 @@ For a start, we are going to create a simple frame.
 
 **Voila!** You have your first frame! For more information, follow the [tutorial](docs/tutorial.md)
 
+## Tools
+
+Select what the *Selection* column says, then launch the tool. Buttons stay greyed out until the selection matches.
+Double-click a profile, trimmed profile or cutout in the tree to edit it later.
+
+| Tool | Shortcut | Selection | Usage |
+|---|---|---|---|
+| Parametric Line | — | two vertices | Line that follows both vertices, usable as a profile path (e.g. a brace) |
+| Create Profile | `Shift+S` | sketch edges, whole sketches, or nothing | Choose Material / Family / Size, alignment, rotation, mirror and pre-extend. Creates one beam per edge, or a free beam of the given length |
+| Create Custom Profile | `Shift+C` | path edges or sketches | Press *Select Profile* and pick a closed section sketch. The beam is extruded along the path |
+| Trim Profile | `M, C` | a face of the profile to trim, then faces of the boundary profiles | *Perfect fit* (coped cut around the boundary shape) or *Simple fit* (straight cut along the faces) |
+| Create Miter Ends | `M, M` | one face on each of two profiles | Miters both profiles on the bisector. Their edges must share an endpoint. Run it again on the `_Mt` object for the other end |
+| Extruded Cutout | `E, C` | a face of a profile + a closed sketch | Holes and slots, *Through All* or to a *Distance* |
+| Attached Link | — | any object | Link to the top-level part, placed with the attachment editor. Counted in IDs and the BOM |
+| Populate IDs / Reset IDs | `M, I` / — | profiles, links, Parts, Groups, Fusions | Numbers parts (`PID`): numbers or letters, identical parts can share an ID |
+| Create Balloons / Refresh Balloons | `M, L` / — | one TechDraw view + parts / existing balloons | Balloons showing each part's ID. Refresh them after design changes |
+| Create BOM | `M, B` | Parts, Groups, Fusions, profiles, links (optionally existing BOM and cut-list sheets first) | Spreadsheet with length, cut angles, weight and price, plus an optional cut list (stock length, kerf) |
+| Recompute FrameForge objects | `M, R` | — | Recomputes all profiles, trims and cutouts, dependencies first |
+| Export TechDraw pages | `M, T` | — | Exports every TechDraw page as a PDF |
+
+Details for every option are in the [tools reference](docs/tools.md).
+
 ## Python API
 
 To script FrameForge (create and edit profiles, trims, miters, cutouts, BOM...) from the FreeCAD console or macros, see the [Python API documentation](docs/python-api.md).
-
-A reference of every tool (selection, options, shortcuts) is in the [tools reference](docs/tools.md).
 
 ## Maintainer
 
