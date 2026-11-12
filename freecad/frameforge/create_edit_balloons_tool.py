@@ -76,7 +76,7 @@ class CreateBalloonsCommand:
         return {
             "Pixmap": os.path.join(ICONPATH, "create-balloons.svg"),
             "MenuText": translate("FrameForge", "Create Balloons"),
-            "Accel": "M, B",
+            "Accel": "M, L",
             "ToolTip": translate(
                 "FrameForge",
                 "<html><head/><body><p><b>Automatically Create balloons for selected Profiles/Links</b> \
@@ -153,8 +153,7 @@ class ResfreshBalloonsCommand:
     def GetResources(self):
         return {
             "Pixmap": os.path.join(ICONPATH, "refresh-balloons.svg"),
-            "MenuText": translate("FrameForge", "Resfresh Balloons"),
-            "Accel": "M, B",
+            "MenuText": translate("FrameForge", "Refresh Balloons"),
             "ToolTip": translate(
                 "FrameForge",
                 "<html><head/><body><p><b>Refresh selected balloons</b> \
@@ -176,7 +175,7 @@ class ResfreshBalloonsCommand:
     def Activated(self):
         selection = Gui.Selection.getSelection()
 
-        App.ActiveDocument.openTransaction("Resfresh Balloons")
+        App.ActiveDocument.openTransaction("Refresh Balloons")
 
         balloons = [b for b in selection if b.TypeId == "TechDraw::DrawViewBalloon" and hasattr(b, "TargetName")]
         for b in balloons:

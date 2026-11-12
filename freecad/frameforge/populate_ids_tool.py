@@ -174,7 +174,7 @@ class PopulateIDsCommand:
         return {
             "Pixmap": os.path.join(ICONPATH, "populate-ids.svg"),
             "MenuText": translate("FrameForge", "Populate IDs"),
-            "Accel": "M, B",
+            "Accel": "M, I",
             "ToolTip": translate(
                 "FrameForge",
                 "<html><head/><body><p><b>Populate IDs of selected Frameforge objects</b> \
@@ -212,7 +212,6 @@ class ResetIDsCommand:
         return {
             "Pixmap": os.path.join(ICONPATH, "reset-ids.svg"),
             "MenuText": translate("FrameForge", "Reset IDs"),
-            "Accel": "M, B",
             "ToolTip": translate(
                 "FrameForge",
                 "<html><head/><body><p><b>Reset IDs of selected Frameforge objects</b> \

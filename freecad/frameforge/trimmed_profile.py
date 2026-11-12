@@ -11,13 +11,22 @@ from freecad.frameforge._utils import (
     ensure_property,
     ensure_profile_structure_properties,
     get_childrens_from_trimmedbody,
+    get_profile_from_extrudedcutout,
     get_profile_from_trimmedbody,
     get_readable_cutting_angles,
     get_trimmed_profile_all_cutting_angles,
+    is_extrudedcutout,
     length_along_normal,
 )
 from freecad.frameforge.ff_tools import translate
 from freecad.frameforge.version import __version__ as ff_version
+
+
+def _get_base_profile(obj):
+    profile = get_profile_from_trimmedbody(obj)
+    if is_extrudedcutout(profile):
+        return get_profile_from_extrudedcutout(profile)
+    return profile
 
 
 def _execute_proxy_if_available(obj):
@@ -135,6 +144,7 @@ class TrimmedProfile:
             tb.ViewObject.Visibility = False
 
         cut_shapes = []
+        cut_shape = Part.Shape()
 
         if fp.TrimmedProfileType == "End Trim":
             if fp.CutType in ["Perfect fit", "Coped cut"]:  # Keeping Coped cut for retro-compatibility
@@ -148,7 +158,6 @@ class TrimmedProfile:
                         cut_shapes.append(Part.Shape(solid))
 
             elif fp.CutType in ["Simple fit", "Simple cut"]:  # Keeping Simple cut for retro-compatibility
-                cut_shape = Part.Shape()
                 for link in fp.TrimmingBoundary:
                     part = link[0]
                     for sub in link[1]:
@@ -162,14 +171,14 @@ class TrimmedProfile:
             precision = 0.001
             target1 = self.getTarget(fp.TrimmedBody)
             edge1 = doc.getObject(target1[0].Name).getSubObject(target1[1][0])
-            profile1 = get_profile_from_trimmedbody(fp.TrimmedBody)
+            profile1 = _get_base_profile(fp.TrimmedBody)
             shape1 = fp.TrimmedBody.Shape
             bound_shapes = []
             bound_profiles = []
             bounds_target = []
             for bound in fp.TrimmingBoundary:
                 bound_shapes.append(bound[0].Shape)
-                bound_profiles.append(get_profile_from_trimmedbody(bound[0]))
+                bound_profiles.append(_get_base_profile(bound[0]))
                 bounds_target.append(self.getTarget(bound[0]))
             trimming_boundary_edges = []
             for target in bounds_target:
@@ -293,8 +302,8 @@ class TrimmedProfile:
         if not cutshape.isNull():
             fp.Shape = fp.TrimmedBody.Shape.cut(cutshape)
         else:
-            # TODO: Do something when cutshape is Null
-            print("cut_shape is Null")
+            App.Console.PrintWarning(f"Frameforge: nothing to trim on {fp.Label}\n")
+            fp.Shape = fp.TrimmedBody.Shape.copy()
 
     def getTarget(self, link):
         while True:
@@ -302,6 +311,10 @@ class TrimmedProfile:
                 return link.Target
             elif hasattr(link, "TrimmedProfileType"):
                 link = link.TrimmedBody
+            elif is_extrudedcutout(link):
+                link = link.baseObject[0]
+            else:
+                raise RuntimeError(f"Frameforge: can't find the profile path of {getattr(link, 'Label', link)}")
 
 
 class ViewProviderTrimmedProfile:

@@ -78,6 +78,8 @@ For a start, we are going to create a simple frame.
 
 To script FrameForge (create and edit profiles, trims, miters, cutouts, BOM...) from the FreeCAD console or macros, see the [Python API documentation](docs/python-api.md).
 
+A reference of every tool (selection, options, shortcuts) is in the [tools reference](docs/tools.md).
+
 ## Maintainer
 
 Vivien HENRY

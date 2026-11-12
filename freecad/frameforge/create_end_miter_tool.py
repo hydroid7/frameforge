@@ -16,7 +16,7 @@ class CreateEndMiterCommand:
         return {
             "Pixmap": os.path.join(ICONPATH, "corner-end-miter.svg"),
             "MenuText": translate("MetalWB", "Create Miter Ends"),
-            "Accel": "M, C",
+            "Accel": "M, M",
             "ToolTip": translate(
                 "MetalWB",
                 "<html><head/><body><p><b>Create Miter Ends</b> \

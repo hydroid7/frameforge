@@ -36,6 +36,8 @@ class ExportTechDrawCommand:
         # Output directory
         if doc.FileName:
             out_dir = QtGui.QFileDialog.getExistingDirectory(None, "Export folder", os.path.dirname(doc.FileName))
+            if not out_dir:
+                return
         else:
             out_dir = FreeCAD.getUserAppDataDir()
 
@@ -58,11 +60,11 @@ class RecomputeFrameForgeObjectsCommand:
     def GetResources(self):
         return {
             "Pixmap": os.path.join(ICONPATH, "recompute.svg"),
-            "MenuText": translate("MetalWB", "recursivly recompute all profiles and related FF Objects"),
+            "MenuText": translate("MetalWB", "Recursively recompute all profiles and related FF Objects"),
             "Accel": "M, R",
             "ToolTip": translate(
                 "MetalWB",
-                "<html><head/><body><p>recursivly recompute all profiles and related FF Objects</p></body></html>",
+                "<html><head/><body><p>Recursively recompute all profiles and related FF Objects</p></body></html>",
             ),
         }
 

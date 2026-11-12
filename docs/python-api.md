@@ -5,7 +5,8 @@ creating profiles, editing them, trimming, mitering, cutouts, links, IDs and BOM
 
 FrameForge has no separate "public API" module. The API *is* the set of FeaturePython proxy classes the GUI commands use
 (`Profile`, `TrimmedProfile`, `ExtrudedCutout`, ...). Every recipe below mirrors what the corresponding command does,
-so objects created from Python behave exactly like objects created from the toolbar.
+so objects created from Python behave exactly like objects created from the toolbar. For the interactive tools see
+the [tools reference](tools.md).
 
 > **GUI required.** The proxies import `FreeCADGui`/`pivy` and their `execute()` methods touch `ViewObject`
 > (e.g. to hide the trimmed body). Run these scripts inside the FreeCAD GUI (console or macro), or with
@@ -328,7 +329,8 @@ for i in range(n):
 App.ActiveDocument.recompute()
 ```
 
-The boundary can be the raw profile. Only its target edge and its anchors are used.
+The boundary can be the raw profile. Only its target edge and its anchors are used. Both the body and the boundary
+may also be an `ExtrudedCutout`, which the GUI command does not allow.
 
 After recompute, `tp.CuttingAngleA` / `tp.CuttingAngleB` contain readable angles (e.g. `"@ 45.0"`) and `tp.Length`
 the length of the cut part.
@@ -360,6 +362,9 @@ App.ActiveDocument.recompute()
 |---|---|
 | `Perfect fit` | splits the body with the **whole shape** of each boundary object and removes the pieces that do not contain the body's center of gravity (coped cut). Sub-elements are ignored |
 | `Simple fit` | for each listed **planar face**, removes the half-space on the outside of the face (straight cut) |
+
+Always give at least one sub-element per boundary (e.g. `["Face1"]`), even for *Perfect fit*. An entry with an empty
+sub-element list is dropped from the `PropertyLinkSubList`, and the trim then does nothing.
 
 `TrimmingBoundary` is a `PropertyLinkSubList`. To change it, assign a new list. Appending in place does not work:
 

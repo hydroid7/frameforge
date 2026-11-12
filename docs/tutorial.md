@@ -429,7 +429,7 @@ Et voila! you've got the balloons, with their arrow pointing at the center of th
 
 The Balloons are annotated with the Profile/Link ID.
 
-If you change the design, (dimensions) just select the balloons in the TreeView, and launch the "Resfresh Balloons" Command, 
+If you change the design, (dimensions) just select the balloons in the TreeView, and launch the "Refresh Balloons" Command, 
 It will update arrow positions and labels accordingly.
 
 ## BOM Tool
